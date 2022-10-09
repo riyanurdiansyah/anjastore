@@ -1,3 +1,4 @@
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
 
@@ -53,36 +54,39 @@ class SubInvoiceRow extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 namaBarang,
+                textAlign: TextAlign.start,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                deskripsiBarang,
-                textAlign: TextAlign.center,
-                style: AppStyleText.stylePoppins(
-                  fontSize: 14,
-                  height: 1.4,
-                  fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+          if (!AppResponsive.isMobile(context))
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  deskripsiBarang,
+                  textAlign: TextAlign.center,
+                  style: AppStyleText.stylePoppins(
+                    fontSize: AppResponsive.isMobile(context) ? 10 : 14,
+                    height: 1.4,
+                    fontWeight: FontWeight.w500,
+                    color:
+                        isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+                  ),
                 ),
               ),
             ),
-          ),
           Expanded(
             child: Container(
               alignment: Alignment.center,
               child: Text(
                 hargaBarang,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
                 ),
@@ -96,7 +100,7 @@ class SubInvoiceRow extends StatelessWidget {
                 qty,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
@@ -111,19 +115,13 @@ class SubInvoiceRow extends StatelessWidget {
                 subTotal,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
                 ),
               ),
             ),
-          ),
-          const Expanded(
-            child: SizedBox(),
-          ),
-          const Expanded(
-            child: SizedBox(),
           ),
         ],
       ),

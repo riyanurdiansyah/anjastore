@@ -1,6 +1,8 @@
 import 'package:anjastore/constanta.dart';
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomSidebar extends StatelessWidget {
@@ -11,6 +13,7 @@ class CustomSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: Get.width / 1.5,
       color: Colors.grey.shade200,
       child: Column(
         children: [
@@ -36,8 +39,12 @@ class CustomSidebar extends StatelessWidget {
                           overlayColor: MaterialStateProperty.all(
                               Colors.grey.withOpacity(0.4)),
                           highlightColor: Colors.grey,
-                          onTap: () =>
-                              context.go('/${listSidebar[index].route}'),
+                          onTap: () {
+                            context.go('/${listSidebar[index].route}');
+                            if (AppResponsive.isMobile(context)) {
+                              Scaffold.of(context).closeDrawer();
+                            }
+                          },
                           child: AnimatedContainer(
                             duration: const Duration(
                               milliseconds: 1000,

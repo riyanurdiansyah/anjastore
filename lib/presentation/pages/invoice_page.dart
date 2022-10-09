@@ -5,6 +5,7 @@ import 'package:anjastore/models/invoice_m.dart';
 import 'package:anjastore/presentation/controllers/invoice_controller.dart';
 import 'package:anjastore/presentation/pages/widget/row_invoice.dart';
 import 'package:anjastore/presentation/pages/widget/row_sub_invoice.dart';
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -112,64 +113,69 @@ class InvoicePage extends StatelessWidget {
             width: double.infinity,
             child: Row(
               children: [
-                SizedBox(
-                  height: 40,
-                  width: Get.width / 3,
-                  child: TextField(
-                    style: AppStyleText.stylePoppins(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: const Color.fromRGBO(241, 242, 244, 1),
-                      border: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.2, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.2, color: Colors.grey),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            const BorderSide(width: 0.2, color: Colors.white),
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      hintText: "Cari invoice disini....",
-                      hintStyle: AppStyleText.styleLato(
-                        color: Colors.grey,
+                Expanded(
+                  flex: 2,
+                  child: SizedBox(
+                    height: 40,
+                    child: TextField(
+                      style: AppStyleText.stylePoppins(
                         fontSize: 14,
-                        height: 1.5,
+                        color: Colors.black,
                       ),
-                      suffixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.highlight_remove_rounded,
-                          size: 18,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color.fromRGBO(241, 242, 244, 1),
+                        border: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.2, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        onPressed: () {},
-                        color: Colors.grey,
-                      ),
-                      prefixIcon: IconButton(
-                        icon: const Icon(
-                          Icons.search_rounded,
-                          size: 18,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.2, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(6),
                         ),
-                        onPressed: () {},
-                        color: Colors.grey,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 0.2, color: Colors.white),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        hintText: "Cari invoice disini....",
+                        hintStyle: AppStyleText.styleLato(
+                          color: Colors.grey,
+                          fontSize: 14,
+                          height: 1.5,
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(
+                            Icons.highlight_remove_rounded,
+                            size: 18,
+                          ),
+                          onPressed: () {},
+                          color: Colors.grey,
+                        ),
+                        prefixIcon: IconButton(
+                          icon: const Icon(
+                            Icons.search_rounded,
+                            size: 18,
+                          ),
+                          onPressed: () {},
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ),
                 ),
-                const Spacer(),
-                SizedBox(
-                  width: Get.width / 6,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: SizedBox(
+                if (!AppResponsive.isMobile(context))
+                  const Expanded(
+                    flex: 4,
+                    child: SizedBox(),
+                  ),
+                if (!AppResponsive.isMobile(context))
+                  SizedBox(
+                    child: Row(
+                      children: [
+                        SizedBox(
                           height: 55,
                           child: CustomPopUpMenu(
                             listMenu: List.generate(
@@ -241,9 +247,7 @@ class InvoicePage extends StatelessWidget {
                             offset: const Offset(-10, 50),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: SizedBox(
+                        SizedBox(
                           height: 55,
                           child: CustomPopUpMenu(
                             listMenu: List.generate(
@@ -310,16 +314,15 @@ class InvoicePage extends StatelessWidget {
                             offset: const Offset(-10, 50),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),
           const InvoiceRow(
             isHeader: true,
-            kdInvoice: "Kode Invoice",
+            kdInvoice: "Invoice",
             dueDateInvoice: "Jatuh Tempo",
             validateProduk: "Validasi Produk",
             description: "Deskripsi",
@@ -360,8 +363,12 @@ class InvoicePage extends StatelessWidget {
                                   if (snapshotSub.hasData) {
                                     if (snapshotSub.data!.isEmpty) {
                                       return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 18),
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal:
+                                              AppResponsive.isMobile(context)
+                                                  ? 8
+                                                  : 20,
+                                        ),
                                         color: Colors.grey.shade100,
                                         height: 80,
                                         width: Get.width,
@@ -400,8 +407,12 @@ class InvoicePage extends StatelessWidget {
                                       );
                                     } else {
                                       return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 20),
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal:
+                                              AppResponsive.isMobile(context)
+                                                  ? 8
+                                                  : 20,
+                                        ),
                                         decoration: BoxDecoration(
                                           color: Colors.grey.shade100,
                                           borderRadius:
@@ -411,7 +422,7 @@ class InvoicePage extends StatelessWidget {
                                           children: [
                                             const SubInvoiceRow(
                                               isHeader: true,
-                                              namaBarang: "Nama Barang",
+                                              namaBarang: "Item",
                                               deskripsiBarang: "Deskripsi",
                                               hargaBarang: "Harga",
                                               qty: "Qty",
@@ -428,12 +439,14 @@ class InvoicePage extends StatelessWidget {
                                                   namaBarang: sub.nama,
                                                   deskripsiBarang:
                                                       sub.deskripsi,
-                                                  hargaBarang: currencyFormatter
-                                                      .format(sub.harga),
+                                                  hargaBarang:
+                                                      currencyFormatterCompact
+                                                          .format(sub.harga),
                                                   qty: "${sub.qty}pcs",
                                                   subTotal:
-                                                      currencyFormatter.format(
-                                                          sub.harga * sub.qty),
+                                                      currencyFormatterCompact
+                                                          .format(sub.harga *
+                                                              sub.qty),
                                                 );
                                               }),
                                             ),
@@ -452,9 +465,11 @@ class InvoicePage extends StatelessWidget {
                                 dueDateInvoice: data.jatuhTempo,
                                 validateProduk: "validateProduk",
                                 description: data.deskripsi,
-                                price: currencyFormatter.format(data.total),
+                                price:
+                                    currencyFormatterCompact.format(data.total),
                                 status: data.status,
-                                total: currencyFormatter.format(data.total),
+                                total:
+                                    currencyFormatterCompact.format(data.total),
                                 namaCustomer: data.customer,
                                 id: data.id,
                               ),

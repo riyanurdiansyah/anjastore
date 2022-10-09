@@ -1,3 +1,4 @@
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
 
@@ -49,74 +50,6 @@ class AdminHeader extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  width: 60,
-                ),
-                Container(
-                  width: 0.6,
-                  color: Colors.grey.shade300,
-                  height: 30,
-                ),
-                const SizedBox(
-                  width: 60,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    width: 35,
-                    height: 35,
-                    child: const Icon(
-                      Icons.email_outlined,
-                      size: 20,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Colors.grey.shade400,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 1,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    width: 35,
-                    height: 35,
-                    child: const Icon(
-                      Icons.notifications_outlined,
-                      size: 20,
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -133,6 +66,24 @@ class AdminHeader extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+            width: 8,
+          ),
+          if (!AppResponsive.isDesktop(context))
+            InkWell(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: const Color.fromRGBO(241, 242, 244, 1),
+                ),
+                child: const Icon(
+                  Icons.grid_view_rounded,
+                ),
+              ),
+            ),
         ],
       ),
     );

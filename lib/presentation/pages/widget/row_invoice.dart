@@ -1,6 +1,6 @@
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
 
 class InvoiceRow extends StatelessWidget {
   const InvoiceRow({
@@ -31,22 +31,28 @@ class InvoiceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      padding: EdgeInsets.all(AppResponsive.isMobile(context) ? 6 : 10),
+      margin: EdgeInsets.only(
+          left: AppResponsive.isMobile(context) ? 8 : 20,
+          right: AppResponsive.isMobile(context) ? 8 : 20,
+          top: AppResponsive.isMobile(context) ? 5 : 10),
       decoration: BoxDecoration(
         color: isHeader ? Colors.blue.shade100 : Colors.grey.shade200,
         borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         children: [
-          Checkbox(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            value: true,
-            onChanged: (val) {},
+          SizedBox(
+            width: 20,
+            child: Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              value: true,
+              onChanged: (val) {},
+            ),
           ),
-          const SizedBox(
-            width: 16,
+          SizedBox(
+            width: AppResponsive.isMobile(context) ? 6 : 16,
           ),
           Expanded(
             child: Container(
@@ -54,7 +60,7 @@ class InvoiceRow extends StatelessWidget {
               child: Text(
                 kdInvoice,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
@@ -67,28 +73,30 @@ class InvoiceRow extends StatelessWidget {
               child: Text(
                 namaCustomer,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
-                style: AppStyleText.stylePoppins(
-                  fontSize: 14,
-                  height: 1.4,
-                  fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
+          if (!AppResponsive.isMobile(context))
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: AppStyleText.stylePoppins(
+                    fontSize: AppResponsive.isMobile(context) ? 10 : 14,
+                    height: 1.4,
+                    fontWeight: FontWeight.w500,
+                    color:
+                        isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
+                  ),
                 ),
               ),
             ),
-          ),
           Expanded(
             child: Container(
               alignment: Alignment.center,
@@ -96,7 +104,7 @@ class InvoiceRow extends StatelessWidget {
                 dueDateInvoice,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
@@ -111,7 +119,7 @@ class InvoiceRow extends StatelessWidget {
                 total,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
                   color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
@@ -125,7 +133,7 @@ class InvoiceRow extends StatelessWidget {
               child: Text(
                 status.toUpperCase(),
                 style: AppStyleText.stylePoppins(
-                  fontSize: 14,
+                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
                   fontWeight: FontWeight.w500,
                   color: isHeader
                       ? Colors.blue.shade500
@@ -136,67 +144,68 @@ class InvoiceRow extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: isHeader
-                  ? Text(
-                      "",
-                      textAlign: TextAlign.center,
-                      style: AppStyleText.stylePoppins(
-                        fontSize: 14,
-                        height: 1.4,
-                        fontWeight: FontWeight.w500,
-                        color: isHeader
-                            ? Colors.blue.shade500
-                            : Colors.grey.shade500,
-                      ),
-                    )
-                  : Row(
-                      children: [
-                        SizedBox(
-                          width: 80,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.red,
-                            ),
-                            onPressed: () {},
-                            child: Text(
-                              "Hapus",
-                              style: AppStyleText.styleAbeezee(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 12,
-                        ),
-                        SizedBox(
-                          width: 80,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.blue,
-                            ),
-                            onPressed: () {
-                              html.window.open('invoice/$id', "_blank");
-                            },
-                            child: Text(
-                              "Ubah",
-                              style: AppStyleText.styleAbeezee(
-                                fontSize: 14,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-            ),
-          ),
+          // Expanded(
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     child: isHeader
+          //         ? Text(
+          //             "",
+          //             textAlign: TextAlign.center,
+          //             style: AppStyleText.stylePoppins(
+          //               fontSize: AppResponsive.isMobile(context) ? 10 : 14,
+          //               height: 1.4,
+          //               fontWeight: FontWeight.w500,
+          //               color: isHeader
+          //                   ? Colors.blue.shade500
+          //                   : Colors.grey.shade500,
+          //             ),
+          //           )
+          //         : Row(
+          //             children: [
+          //               SizedBox(
+          //                 width: 80,
+          //                 child: ElevatedButton(
+          //                   style: ElevatedButton.styleFrom(
+          //                     primary: Colors.red,
+          //                   ),
+          //                   onPressed: () {},
+          //                   child: Text(
+          //                     "Hapus",
+          //                     style: AppStyleText.styleAbeezee(
+          //                       fontSize:
+          //                           AppResponsive.isMobile(context) ? 10 : 14,
+          //                       color: Colors.white,
+          //                       fontWeight: FontWeight.bold,
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //               const SizedBox(
+          //                 width: 12,
+          //               ),
+          //               SizedBox(
+          //                 width: 80,
+          //                 child: ElevatedButton(
+          //                   style: ElevatedButton.styleFrom(
+          //                     primary: Colors.blue,
+          //                   ),
+          //                   onPressed: () {
+          //                     html.window.open('invoice/$id', "_blank");
+          //                   },
+          //                   child: Text(
+          //                     "Ubah",
+          //                     style: AppStyleText.styleAbeezee(
+          //                       fontSize: 14,
+          //                       color: Colors.white,
+          //                       fontWeight: FontWeight.bold,
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //   ),
+          // ),
         ],
       ),
     );

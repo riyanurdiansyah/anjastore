@@ -16,57 +16,83 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blueGrey,
-      padding: const EdgeInsets.all(20),
-      child: Card(
-        elevation: 2,
-        semanticContainer: true,
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.white,
-          // drawer: const CustomSidebar(),
-          body: Row(
-            children: [
-              if (!AppResponsive.isMobileWeb(context))
+    if (AppResponsive.isDesktop(context)) {
+      return Container(
+        color: Colors.blueGrey,
+        padding: const EdgeInsets.all(20),
+        child: Card(
+          elevation: 2,
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            drawer: const CustomSidebar(),
+            body: Row(
+              children: [
+                if (AppResponsive.isDesktop(context))
+                  Expanded(
+                    flex: 1,
+                    child: CustomSidebar(
+                      route: route,
+                    ),
+                  ),
                 Expanded(
-                  flex: 1,
-                  child: CustomSidebar(
+                  flex: 5,
+                  child: MainWidget(
                     route: route,
                   ),
-                ),
-              Expanded(
-                flex: 5,
-                child: Column(
-                  children: [
-                    const AdminHeader(),
-                    Expanded(
-                      child: IndexedStack(
-                        index: listSidebar.indexWhere(
-                          (e) => e.route.contains(route),
-                        ),
-                        children: [
-                          Container(
-                            color: Colors.red,
-                          ),
-                          CustomerPage(),
-                          InvoicePage(),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                  ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
-      ),
+      );
+    } else {
+      return Scaffold(
+        drawer: CustomSidebar(
+          route: route,
+        ),
+        body: MainWidget(route: route),
+      );
+    }
+  }
+}
+
+class MainWidget extends StatelessWidget {
+  const MainWidget({Key? key, required this.route}) : super(key: key);
+
+  final String route;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const AdminHeader(),
+        Expanded(
+          child: AnimatedSwitcher(
+            transitionBuilder: AnimatedSwitcher.defaultTransitionBuilder,
+            duration: const Duration(milliseconds: 500),
+            child: IndexedStack(
+              index: listSidebar.indexWhere(
+                (e) => e.route.contains(route),
+              ),
+              children: [
+                Container(
+                  color: Colors.red,
+                ),
+                CustomerPage(),
+                InvoicePage(),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+      ],
     );
   }
 }
