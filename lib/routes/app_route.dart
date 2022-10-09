@@ -1,4 +1,5 @@
 import 'package:anjastore/presentation/pages/dashboard_page.dart';
+import 'package:anjastore/presentation/pages/invoice_detail_page.dart';
 import 'package:anjastore/presentation/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +38,13 @@ class AppRoute {
             },
           )
         ],
+      ),
+      GoRoute(
+        path: '/invoice/:id',
+        builder: (BuildContext context, GoRouterState state) {
+          final String id = state.params['id']!;
+          return InvoiceDetailPage(id: id);
+        },
       )
     ],
   );

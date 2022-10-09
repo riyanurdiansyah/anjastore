@@ -54,3 +54,5 @@ final currencyFormatter = NumberFormat.currency(
   symbol: "Rp ",
   decimalDigits: 0,
 );
+
+NumberFormat numberFormat = NumberFormat.decimalPattern('id');

@@ -1,48 +1,39 @@
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
 
-class SubInvoiceRow extends StatelessWidget {
-  const SubInvoiceRow({
+class CustomerRow extends StatelessWidget {
+  const CustomerRow({
     Key? key,
+    s,
     required this.isHeader,
-    required this.namaBarang,
-    required this.deskripsiBarang,
-    required this.hargaBarang,
-    required this.qty,
-    required this.subTotal,
+    required this.id,
+    required this.nama,
+    required this.telp,
+    required this.alamat,
   }) : super(key: key);
 
   final bool isHeader;
-  final String namaBarang;
-  final String deskripsiBarang;
-  final String hargaBarang;
-  final String qty;
-  final String subTotal;
+  final String id;
+  final String nama;
+  final String telp;
+  final String alamat;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 50,
-      color: isHeader ? Colors.grey.shade200 : Colors.grey.shade100,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      decoration: BoxDecoration(
+        color: isHeader ? Colors.blue.shade100 : Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(6),
+      ),
       child: Row(
         children: [
-          Container(
-            height: 50,
-            decoration: BoxDecoration(
-              color: isHeader ? Colors.grey.shade400 : Colors.blue,
-            ),
-            width: 5,
-          ),
-          const SizedBox(
-            width: 5,
-          ),
           Checkbox(
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             value: false,
-            checkColor: Colors.white,
-            fillColor: MaterialStateProperty.all(Colors.grey.shade400),
-            activeColor: Colors.blue.shade200,
             onChanged: (val) {},
           ),
           const SizedBox(
@@ -52,11 +43,11 @@ class SubInvoiceRow extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               child: Text(
-                namaBarang,
+                id,
                 style: AppStyleText.stylePoppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+                  color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
               ),
             ),
@@ -65,13 +56,13 @@ class SubInvoiceRow extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               child: Text(
-                deskripsiBarang,
+                nama,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
                   fontSize: 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+                  color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
               ),
             ),
@@ -80,50 +71,30 @@ class SubInvoiceRow extends StatelessWidget {
             child: Container(
               alignment: Alignment.center,
               child: Text(
-                hargaBarang,
+                telp,
                 style: AppStyleText.stylePoppins(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+                  color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
               ),
             ),
           ),
           Expanded(
+            flex: 2,
             child: Container(
               alignment: Alignment.center,
               child: Text(
-                qty,
+                alamat,
                 textAlign: TextAlign.center,
                 style: AppStyleText.stylePoppins(
                   fontSize: 14,
                   height: 1.4,
                   fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
+                  color: isHeader ? Colors.blue.shade500 : Colors.grey.shade500,
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                subTotal,
-                textAlign: TextAlign.center,
-                style: AppStyleText.stylePoppins(
-                  fontSize: 14,
-                  height: 1.4,
-                  fontWeight: FontWeight.w500,
-                  color: isHeader ? Colors.grey.shade600 : Colors.grey.shade400,
-                ),
-              ),
-            ),
-          ),
-          const Expanded(
-            child: SizedBox(),
-          ),
-          const Expanded(
-            child: SizedBox(),
           ),
         ],
       ),

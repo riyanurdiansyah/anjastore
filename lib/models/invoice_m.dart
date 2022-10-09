@@ -13,6 +13,8 @@ class InvoiceM extends Equatable {
   final String deskripsi;
   final String id;
   final String status;
+  final String customer;
+  final String customerId;
 
   const InvoiceM({
     required this.tanggalInvoice,
@@ -22,6 +24,8 @@ class InvoiceM extends Equatable {
     required this.deskripsi,
     required this.id,
     required this.status,
+    required this.customer,
+    required this.customerId,
   });
 
   @override
@@ -36,6 +40,8 @@ class InvoiceM extends Equatable {
         deskripsi: json["deskripsi"],
         id: json["id"],
         status: json["status"],
+        customer: json["customer"],
+        customerId: json["customer_id"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,5 +52,7 @@ class InvoiceM extends Equatable {
         "deskripsi": deskripsi,
         "id": id,
         "status": status,
+        "customer": customer,
+        "customer_id": customerId,
       };
 }

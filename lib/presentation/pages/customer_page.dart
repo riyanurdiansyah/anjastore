@@ -1,21 +1,18 @@
 import 'package:anjastore/constanta.dart';
 import 'package:anjastore/helper/app_dialog.dart';
-import 'package:anjastore/models/barang_m.dart';
-import 'package:anjastore/models/invoice_m.dart';
-import 'package:anjastore/presentation/controllers/invoice_controller.dart';
-import 'package:anjastore/presentation/pages/widget/row_invoice.dart';
-import 'package:anjastore/presentation/pages/widget/row_sub_invoice.dart';
+import 'package:anjastore/models/user_m.dart';
+import 'package:anjastore/presentation/controllers/customer_controller.dart';
+import 'package:anjastore/presentation/pages/widget/row_customer.dart';
 import 'package:anjastore/styles/app_style_text.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'widget/custom_popup_menu.dart';
 
-class InvoicePage extends StatelessWidget {
-  InvoicePage({Key? key}) : super(key: key);
+class CustomerPage extends StatelessWidget {
+  CustomerPage({Key? key}) : super(key: key);
 
-  final invC = Get.put(InvoiceController());
+  final custC = Get.put(CustomerController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +29,7 @@ class InvoicePage extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      'Semua Invoices',
+                      'Semua Customer',
                       style: AppStyleText.styleAbeezee(
                         fontWeight: FontWeight.w800,
                         fontSize: 18,
@@ -40,27 +37,8 @@ class InvoicePage extends StatelessWidget {
                     ),
                     const Spacer(),
                     TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.print_rounded,
-                        color: Colors.red,
-                        size: 20,
-                      ),
-                      label: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          'Print',
-                          style: AppStyleText.stylePoppins(
-                            color: Colors.red,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TextButton.icon(
                       onPressed: () async =>
-                          await AppDialog.dialogFormInvoice(context),
+                          await AppDialog.dialogAddCustomer(context),
                       icon: const Icon(
                         Icons.post_add_rounded,
                         color: Colors.blue,
@@ -120,6 +98,7 @@ class InvoicePage extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.black,
                     ),
+                    cursorHeight: 10,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: const Color.fromRGBO(241, 242, 244, 1),
@@ -138,11 +117,11 @@ class InvoicePage extends StatelessWidget {
                             const BorderSide(width: 0.2, color: Colors.white),
                         borderRadius: BorderRadius.circular(6),
                       ),
+                      contentPadding: const EdgeInsets.only(top: 6),
                       hintText: "Cari invoice disini....",
                       hintStyle: AppStyleText.styleLato(
                         color: Colors.grey,
                         fontSize: 14,
-                        height: 1.5,
                       ),
                       suffixIcon: IconButton(
                         icon: const Icon(
@@ -317,151 +296,31 @@ class InvoicePage extends StatelessWidget {
               ],
             ),
           ),
-          const InvoiceRow(
+          const CustomerRow(
             isHeader: true,
-            kdInvoice: "Kode Invoice",
-            dueDateInvoice: "Jatuh Tempo",
-            validateProduk: "Validasi Produk",
-            description: "Deskripsi",
-            price: "Harga",
-            total: "Total",
-            status: "Status",
-            namaCustomer: "Customer",
-            id: '',
+            id: "ID",
+            nama: "Nama",
+            telp: "No Telpon",
+            alamat: "Alamat",
           ),
           const SizedBox(
             height: 8,
           ),
-          StreamBuilder<List<InvoiceM>>(
-            stream: invC.streamInvoice(),
+          StreamBuilder<List<UserM>>(
+            stream: custC.streamCustomer(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Expanded(
                   child: ListView(
                     children: List.generate(
                       snapshot.data?.length ?? 0,
-                      (index) {
-                        final data = snapshot.data![index];
-                        return ExpandableNotifier(
-                          child: ScrollOnExpand(
-                            child: ExpandablePanel(
-                              theme: const ExpandableThemeData(
-                                hasIcon: false,
-                                headerAlignment:
-                                    ExpandablePanelHeaderAlignment.center,
-                                expandIcon: Icons.add_rounded,
-                                collapseIcon: Icons.remove_rounded,
-                                animationDuration: Duration(milliseconds: 800),
-                              ),
-                              collapsed: const SizedBox(),
-                              expanded: StreamBuilder<List<BarangM>>(
-                                stream: invC.streamSubInvoice(data.id),
-                                builder: (context, snapshotSub) {
-                                  if (snapshotSub.hasData) {
-                                    if (snapshotSub.data!.isEmpty) {
-                                      return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 18),
-                                        color: Colors.grey.shade100,
-                                        height: 80,
-                                        width: Get.width,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Tidak ada item untuk invoice ini",
-                                              style: AppStyleText.stylePoppins(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey.shade400,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 6,
-                                            ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.blue,
-                                              ),
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Tambah",
-                                                style:
-                                                    AppStyleText.styleAbeezee(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const SubInvoiceRow(
-                                              isHeader: true,
-                                              namaBarang: "Nama Barang",
-                                              deskripsiBarang: "Deskripsi",
-                                              hargaBarang: "Harga",
-                                              qty: "Qty",
-                                              subTotal: "Sub Total",
-                                            ),
-                                            Column(
-                                              children: List.generate(
-                                                  snapshotSub.data?.length ?? 0,
-                                                  (subIndex) {
-                                                final sub = snapshotSub.data!
-                                                    .toList()[subIndex];
-                                                return SubInvoiceRow(
-                                                  isHeader: false,
-                                                  namaBarang: sub.nama,
-                                                  deskripsiBarang:
-                                                      sub.deskripsi,
-                                                  hargaBarang: currencyFormatter
-                                                      .format(sub.harga),
-                                                  qty: "${sub.qty}pcs",
-                                                  subTotal:
-                                                      currencyFormatter.format(
-                                                          sub.harga * sub.qty),
-                                                );
-                                              }),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                              header: InvoiceRow(
-                                isHeader: false,
-                                kdInvoice: "AJSTORE${data.noTransaksi}",
-                                dueDateInvoice: data.jatuhTempo,
-                                validateProduk: "validateProduk",
-                                description: data.deskripsi,
-                                price: currencyFormatter.format(data.total),
-                                status: data.status,
-                                total: currencyFormatter.format(data.total),
-                                namaCustomer: data.customer,
-                                id: data.id,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                      (i) => CustomerRow(
+                        isHeader: false,
+                        id: snapshot.data![i].id,
+                        nama: snapshot.data![i].nama,
+                        telp: snapshot.data![i].noTelp,
+                        alamat: snapshot.data![i].alamat,
+                      ),
                     ),
                   ),
                 );

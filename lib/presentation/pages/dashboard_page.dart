@@ -1,4 +1,5 @@
 import 'package:anjastore/constanta.dart';
+import 'package:anjastore/presentation/pages/customer_page.dart';
 import 'package:anjastore/presentation/pages/invoice_page.dart';
 import 'package:anjastore/presentation/pages/widget/admin_header.dart';
 import 'package:anjastore/presentation/pages/widget/sidebar.dart';
@@ -51,12 +52,13 @@ class DashboardPage extends StatelessWidget {
                           Container(
                             color: Colors.red,
                           ),
-                          Container(
-                            color: Colors.amber,
-                          ),
+                          CustomerPage(),
                           InvoicePage(),
                         ],
                       ),
+                    ),
+                    const SizedBox(
+                      height: 25,
                     ),
                   ],
                 ),

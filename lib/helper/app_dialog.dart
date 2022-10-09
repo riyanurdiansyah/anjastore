@@ -1,3 +1,4 @@
+import 'package:anjastore/presentation/controllers/customer_controller.dart';
 import 'package:anjastore/presentation/controllers/invoice_controller.dart';
 import 'package:anjastore/styles/app_color.dart';
 import 'package:anjastore/styles/app_formatter.dart';
@@ -83,6 +84,45 @@ class AppDialog {
                   ),
                   const SizedBox(
                     height: 20,
+                  ),
+                  Text(
+                    "Nama Customer",
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  StreamBuilder<List<String>>(
+                    stream: invC.streamCustomer(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownSearch<String>(
+                          popupProps: const PopupProps.menu(
+                            showSelectedItems: true,
+                            fit: FlexFit.loose,
+                          ),
+                          items: snapshot.data!,
+                          dropdownDecoratorProps: DropDownDecoratorProps(
+                            dropdownSearchDecoration:
+                                AppStyleTextfield.formInvoiceDescStyle(
+                              hintText: '',
+                              fontSize: 14,
+                            ),
+                          ),
+                          onChanged: (val) => invC.onChangeCustomer(val),
+                          selectedItem: invC.namaCustomer.value,
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
                   ),
                   Text(
                     "Kode Invoice",
@@ -666,6 +706,272 @@ class AppDialog {
           ),
         ),
       ),
+    );
+  }
+
+  static dialogAddCustomer(BuildContext context) {
+    final custC = Get.put(CustomerController());
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          content: SizedBox(
+            width: Get.width / 3,
+            child: Form(
+              key: custC.formAddCustomer,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Form Customer',
+                              style: AppStyleText.styleAbeezee(
+                                fontWeight: FontWeight.w800,
+                                fontSize: 18,
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () => Navigator.pop(context),
+                              child: const Icon(
+                                Icons.close_rounded,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Stack(
+                          alignment: AlignmentDirectional.centerStart,
+                          children: [
+                            Container(
+                              height: 2,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.grey.shade300,
+                              ),
+                            ),
+                            Container(
+                              height: 4,
+                              width: 26,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Nama Lengkap",
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: custC.tcNamaCustomer,
+                    textAlignVertical: TextAlignVertical.top,
+                    scrollPadding: const EdgeInsets.symmetric(vertical: 20),
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      height: 1.4,
+                    ),
+                    decoration: AppStyleTextfield.formInvoiceDescStyle(
+                      hintText: '',
+                      fontSize: 14,
+                    ),
+                    onChanged: (val) => {},
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) => AppValidator.requiredField(value!),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Email",
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: custC.tcEmailCustomer,
+                    textAlignVertical: TextAlignVertical.top,
+                    scrollPadding: const EdgeInsets.symmetric(vertical: 20),
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      height: 1.4,
+                    ),
+                    keyboardType: TextInputType.emailAddress,
+                    inputFormatters: <TextInputFormatter>[
+                      AppLowerCaseTxt(),
+                    ],
+                    decoration: AppStyleTextfield.formInvoiceDescStyle(
+                      hintText: '',
+                      fontSize: 14,
+                    ),
+                    onChanged: (val) => {},
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) => AppValidator.requiredField(value!),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "No Handphone",
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    controller: custC.tcTelpCustomer,
+                    textAlignVertical: TextAlignVertical.top,
+                    scrollPadding: const EdgeInsets.symmetric(vertical: 20),
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      height: 1.4,
+                    ),
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                      AppPhoneText(),
+                    ],
+                    decoration: AppStyleTextfield.formInvoiceDescStyle(
+                      hintText: '',
+                      fontSize: 14,
+                    ),
+                    onChanged: (val) => {},
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) => AppValidator.requiredField(value!),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "Alamat",
+                    style: AppStyleText.stylePoppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 125,
+                    child: TextFormField(
+                      controller: custC.tcAlamatCustomer,
+                      textAlignVertical: TextAlignVertical.top,
+                      keyboardType: TextInputType.multiline,
+                      scrollPadding: const EdgeInsets.symmetric(vertical: 20),
+                      maxLines: null,
+                      minLines: null,
+                      expands: true,
+                      style: AppStyleText.stylePoppins(
+                        fontSize: 14,
+                        height: 1.4,
+                      ),
+                      decoration: AppStyleTextfield.formInvoiceDescStyle(
+                        hintText: '',
+                        fontSize: 14,
+                      ),
+                      onChanged: (val) => {},
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => AppValidator.requiredField(value!),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.grey.shade300,
+                            ),
+                            onPressed: () => Navigator.pop(context),
+                            child: Text(
+                              'Batal',
+                              style: AppStyleText.stylePoppins(
+                                fontSize: 14,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.blue,
+                            ),
+                            onPressed: () {
+                              if (custC.formAddCustomer.currentState!
+                                  .validate()) {
+                                custC.addCustomer();
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text(
+                              'Tambah',
+                              style: AppStyleText.stylePoppins(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
