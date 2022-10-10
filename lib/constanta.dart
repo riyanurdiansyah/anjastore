@@ -56,7 +56,7 @@ final currencyFormatter = NumberFormat.currency(
 );
 final currencyFormatterCompact = NumberFormat.compactCurrency(
   locale: "id_ID",
-  symbol: "Rp ",
+  symbol: "",
   decimalDigits: 0,
 );
 

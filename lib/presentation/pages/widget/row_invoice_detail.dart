@@ -1,3 +1,4 @@
+import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
 
@@ -43,53 +44,57 @@ class InvoiceDetailRow extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: 2,
             child: Text(
               item,
               textAlign: TextAlign.center,
               style: AppStyleText.stylePoppins(
-                fontSize: 12,
+                fontSize: AppResponsive.isMobile(context) ? 10 : 12,
                 height: 1.4,
                 color: isHeader ? Colors.white : Colors.black,
               ),
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Text(
               description,
               textAlign: TextAlign.center,
               style: AppStyleText.stylePoppins(
-                fontSize: 12,
+                fontSize: AppResponsive.isMobile(context) ? 10 : 12,
                 color: isHeader ? Colors.white : Colors.black,
               ),
             ),
           ),
           Expanded(
+            flex: 1,
             child: Text(
               rate,
               textAlign: TextAlign.center,
               style: AppStyleText.stylePoppins(
-                fontSize: 12,
+                fontSize: AppResponsive.isMobile(context) ? 10 : 12,
                 color: isHeader ? Colors.white : Colors.black,
               ),
             ),
           ),
           Expanded(
+            flex: 1,
             child: Text(
               qty,
               textAlign: TextAlign.center,
               style: AppStyleText.stylePoppins(
-                fontSize: 12,
+                fontSize: AppResponsive.isMobile(context) ? 10 : 12,
                 color: isHeader ? Colors.white : Colors.black,
               ),
             ),
           ),
           Expanded(
+            flex: 1,
             child: Text(
               amount,
               textAlign: TextAlign.right,
               style: AppStyleText.stylePoppins(
-                fontSize: 12,
+                fontSize: AppResponsive.isMobile(context) ? 10 : 12,
                 color: isHeader ? Colors.white : Colors.black,
               ),
             ),

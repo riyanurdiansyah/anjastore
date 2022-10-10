@@ -1,6 +1,7 @@
 import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:flutter/material.dart';
+import 'dart:html' as html;
 
 class InvoiceRow extends StatelessWidget {
   const InvoiceRow({
@@ -130,18 +131,35 @@ class InvoiceRow extends StatelessWidget {
           Expanded(
             child: Container(
               alignment: Alignment.center,
-              child: Text(
-                status.toUpperCase(),
-                style: AppStyleText.stylePoppins(
-                  fontSize: AppResponsive.isMobile(context) ? 10 : 14,
-                  fontWeight: FontWeight.w500,
-                  color: isHeader
-                      ? Colors.blue.shade500
-                      : status == "1"
-                          ? Colors.green.shade500
-                          : Colors.red.shade500,
-                ),
-              ),
+              child: isHeader
+                  ? Text(
+                      status,
+                      style: AppStyleText.stylePoppins(
+                        fontSize: AppResponsive.isMobile(context) ? 10 : 14,
+                        fontWeight: FontWeight.w500,
+                        color: isHeader
+                            ? Colors.blue.shade500
+                            : status == "1"
+                                ? Colors.green.shade500
+                                : Colors.red.shade500,
+                      ),
+                    )
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blue,
+                      ),
+                      onPressed: () {
+                        html.window.open('invoice/$id', "_blank");
+                      },
+                      child: Text(
+                        "lihat",
+                        style: AppStyleText.styleAbeezee(
+                          fontSize: 14,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
             ),
           ),
           // Expanded(

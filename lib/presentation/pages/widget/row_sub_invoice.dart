@@ -123,6 +123,8 @@ class SubInvoiceRow extends StatelessWidget {
               ),
             ),
           ),
+          if (!AppResponsive.isMobile(context))
+            const Expanded(child: SizedBox()),
         ],
       ),
     );
