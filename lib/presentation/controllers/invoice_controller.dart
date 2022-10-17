@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:anjastore/models/barang_m.dart';
 import 'package:anjastore/models/invoice_m.dart';
@@ -58,7 +59,9 @@ class InvoiceController extends GetxController {
 
     return stream.map((e) => e.docs).map((val) {
       noTransaksi.value = val[0]['no_transaksi'] + 1;
-      tcNoTransaksiInvoice.text = "AJSTORE-$noTransaksi";
+      if (tcNoTransaksiInvoice.text.isEmpty) {
+        tcNoTransaksiInvoice.text = "AJSTORE-$noTransaksi";
+      }
       return noTransaksi.value;
     });
   }
@@ -120,6 +123,36 @@ class InvoiceController extends GetxController {
     });
   }
 
+  void updateInvoice(String id, int noTrans) async {
+    int total = 0;
+    for (int i = 0; i < listBarang.length; i++) {
+      var totalBarang = listBarang[i].harga * listBarang[i].qty;
+      total += totalBarang;
+    }
+    await FirebaseFirestore.instance.collection('invoice').doc(id).update({
+      "no_transaksi": noTrans,
+      "deskripsi": tcDeskripsiInvoice.text,
+      "jatuh_tempo": tcJthTempoInvoice.text,
+      "tanggal_invoice": tcTglInvoice.text,
+      "total": total,
+      "id": id,
+      "customer": customer.value.nama,
+      "customer_id": customer.value.id,
+      "status": "on-hold",
+    });
+    for (int j = 0; j < listBarang.length; j++) {
+      final cek = await FirebaseFirestore.instance
+          .collection('invoice')
+          .doc(id)
+          .collection('barang')
+          .add(
+            listBarang[j].toJson(),
+          );
+      log("CHECK : ${listBarang.length}");
+      log("CHECK : $id");
+    }
+  }
+
   Stream<List<String>> streamCustomer() {
     Stream<QuerySnapshot<Map<String, dynamic>>> stream =
         FirebaseFirestore.instance.collection("customer").snapshots();
@@ -132,7 +165,9 @@ class InvoiceController extends GetxController {
         listNamaCustomer.add(data.data()['nama']);
       }
       customer.value = listCustomer[0];
-      namaCustomer.value = listNamaCustomer[0];
+      if (namaCustomer.isEmpty) {
+        namaCustomer.value = listNamaCustomer[0];
+      }
       return listNamaCustomer;
     });
   }
@@ -149,7 +184,9 @@ class InvoiceController extends GetxController {
       for (var data in val) {
         listTempBarang.add(data.data()['nama']);
       }
-      namaBarang.value = listTempBarang[0];
+      if (namaBarang.isEmpty) {
+        namaBarang.value = listTempBarang[0];
+      }
       return listTempBarang;
     });
   }
@@ -216,5 +253,9 @@ class InvoiceController extends GetxController {
         }
       },
     );
+  }
+
+  void deleteInvoice(String id) async {
+    await FirebaseFirestore.instance.collection('invoice').doc(id).delete();
   }
 }

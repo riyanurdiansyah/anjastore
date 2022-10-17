@@ -16,6 +16,8 @@ class InvoiceRow extends StatelessWidget {
     required this.total,
     required this.status,
     required this.id,
+    this.onTapEdit,
+    this.onTapDelete,
   }) : super(key: key);
 
   final bool isHeader;
@@ -28,33 +30,25 @@ class InvoiceRow extends StatelessWidget {
   final String total;
   final String status;
   final String id;
+  final VoidCallback? onTapEdit;
+  final VoidCallback? onTapDelete;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(AppResponsive.isMobile(context) ? 6 : 10),
+      padding: EdgeInsets.symmetric(
+          horizontal: AppResponsive.isMobile(context) ? 6 : 10,
+          vertical: AppResponsive.isMobile(context) ? 12 : 10),
       margin: EdgeInsets.only(
           left: AppResponsive.isMobile(context) ? 8 : 20,
           right: AppResponsive.isMobile(context) ? 8 : 20,
           top: AppResponsive.isMobile(context) ? 5 : 10),
       decoration: BoxDecoration(
         color: isHeader ? Colors.blue.shade100 : Colors.grey.shade200,
-        borderRadius: BorderRadius.circular(6),
+        // borderRadius: BorderRadius.circular(6),
       ),
       child: Row(
         children: [
-          SizedBox(
-            width: 20,
-            child: Checkbox(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4)),
-              value: true,
-              onChanged: (val) {},
-            ),
-          ),
-          SizedBox(
-            width: AppResponsive.isMobile(context) ? 6 : 16,
-          ),
           Expanded(
             child: Container(
               alignment: Alignment.center,
@@ -130,37 +124,50 @@ class InvoiceRow extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              alignment: Alignment.center,
-              child: isHeader
-                  ? Text(
-                      status,
-                      style: AppStyleText.stylePoppins(
-                        fontSize: AppResponsive.isMobile(context) ? 10 : 14,
-                        fontWeight: FontWeight.w500,
-                        color: isHeader
-                            ? Colors.blue.shade500
-                            : status == "1"
-                                ? Colors.green.shade500
-                                : Colors.red.shade500,
-                      ),
-                    )
-                  : ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                      ),
-                      onPressed: () {
-                        html.window.open('invoice/$id', "_blank");
-                      },
-                      child: Text(
-                        "lihat",
-                        style: AppStyleText.styleAbeezee(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                alignment: Alignment.center,
+                child: isHeader
+                    ? Text(
+                        status,
+                        style: AppStyleText.stylePoppins(
+                          fontSize: AppResponsive.isMobile(context) ? 10 : 14,
+                          fontWeight: FontWeight.w500,
+                          color: isHeader
+                              ? Colors.blue.shade500
+                              : status == "1"
+                                  ? Colors.green.shade500
+                                  : Colors.red.shade500,
                         ),
-                      ),
-                    ),
-            ),
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () => onTapEdit!(),
+                            child: const Icon(
+                              Icons.mode_edit_rounded,
+                              color: Colors.green,
+                              size: 16,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => onTapDelete!(),
+                            child: const Icon(
+                              Icons.delete_outline_rounded,
+                              size: 16,
+                              color: Colors.red,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                html.window.open('invoice/$id', "_blank"),
+                            child: const Icon(
+                              Icons.remove_red_eye_rounded,
+                              color: Colors.blue,
+                              size: 16,
+                            ),
+                          ),
+                        ],
+                      )),
           ),
           // Expanded(
           //   child: Container(

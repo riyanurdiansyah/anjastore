@@ -4,7 +4,6 @@ import 'package:anjastore/models/barang_m.dart';
 import 'package:anjastore/models/invoice_m.dart';
 import 'package:anjastore/presentation/controllers/invoice_controller.dart';
 import 'package:anjastore/presentation/pages/widget/row_invoice.dart';
-import 'package:anjastore/presentation/pages/widget/row_sub_invoice.dart';
 import 'package:anjastore/styles/app_responsive.dart';
 import 'package:anjastore/styles/app_style_text.dart';
 import 'package:expandable/expandable.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'widget/custom_popup_menu.dart';
+import 'widget/row_sub_invoice.dart';
 
 class InvoicePage extends StatelessWidget {
   InvoicePage({Key? key}) : super(key: key);
@@ -328,7 +328,7 @@ class InvoicePage extends StatelessWidget {
             description: "Deskripsi",
             price: "Harga",
             total: "Total",
-            status: "Aksi",
+            status: "",
             namaCustomer: "Customer",
             id: '',
           ),
@@ -345,136 +345,168 @@ class InvoicePage extends StatelessWidget {
                       snapshot.data?.length ?? 0,
                       (index) {
                         final data = snapshot.data![index];
-                        return ExpandableNotifier(
-                          child: ScrollOnExpand(
-                            child: ExpandablePanel(
-                              theme: const ExpandableThemeData(
-                                hasIcon: false,
-                                headerAlignment:
-                                    ExpandablePanelHeaderAlignment.center,
-                                expandIcon: Icons.add_rounded,
-                                collapseIcon: Icons.remove_rounded,
-                                animationDuration: Duration(milliseconds: 800),
-                              ),
-                              collapsed: const SizedBox(),
-                              expanded: StreamBuilder<List<BarangM>>(
-                                stream: invC.streamSubInvoice(data.id),
-                                builder: (context, snapshotSub) {
-                                  if (snapshotSub.hasData) {
-                                    if (snapshotSub.data!.isEmpty) {
-                                      return Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal:
-                                              AppResponsive.isMobile(context)
-                                                  ? 8
-                                                  : 20,
-                                        ),
-                                        color: Colors.grey.shade100,
-                                        height: 80,
-                                        width: Get.width,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Tidak ada item untuk invoice ini",
-                                              style: AppStyleText.stylePoppins(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.grey.shade400,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 6,
-                                            ),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                primary: Colors.blue,
-                                              ),
-                                              onPressed: () {},
-                                              child: Text(
-                                                "Tambah",
-                                                style:
-                                                    AppStyleText.styleAbeezee(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
+                        return StreamBuilder<List<BarangM>>(
+                          stream: invC.streamSubInvoice(data.id),
+                          builder: (context, snapshotSub) {
+                            if (snapshot.hasData) {
+                              return ExpandableNotifier(
+                                child: ScrollOnExpand(
+                                  child: ExpandablePanel(
+                                    theme: const ExpandableThemeData(
+                                      hasIcon: false,
+                                      headerAlignment:
+                                          ExpandablePanelHeaderAlignment.center,
+                                      expandIcon: Icons.add_rounded,
+                                      collapseIcon: Icons.remove_rounded,
+                                      animationDuration:
+                                          Duration(milliseconds: 800),
+                                    ),
+                                    collapsed: const SizedBox(),
+                                    expanded: snapshotSub.hasData
+                                        ? snapshot.data!.isEmpty
+                                            ? Container(
+                                                margin: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      AppResponsive.isMobile(
+                                                              context)
+                                                          ? 8
+                                                          : 20,
                                                 ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return Container(
-                                        margin: EdgeInsets.symmetric(
-                                          horizontal:
-                                              AppResponsive.isMobile(context)
-                                                  ? 8
-                                                  : 20,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: Colors.grey.shade100,
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            const SubInvoiceRow(
-                                              isHeader: true,
-                                              namaBarang: "Item",
-                                              deskripsiBarang: "Deskripsi",
-                                              hargaBarang: "Harga",
-                                              qty: "Qty",
-                                              subTotal: "Sub Total",
-                                            ),
-                                            Column(
-                                              children: List.generate(
-                                                  snapshotSub.data?.length ?? 0,
-                                                  (subIndex) {
-                                                final sub = snapshotSub.data!
-                                                    .toList()[subIndex];
-                                                return SubInvoiceRow(
-                                                  isHeader: false,
-                                                  namaBarang: sub.nama,
-                                                  deskripsiBarang:
-                                                      sub.deskripsi,
-                                                  hargaBarang:
-                                                      currencyFormatterCompact
-                                                          .format(sub.harga),
-                                                  qty: "${sub.qty}pcs",
-                                                  subTotal:
-                                                      currencyFormatterCompact
-                                                          .format(sub.harga *
-                                                              sub.qty),
-                                                );
-                                              }),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                              header: InvoiceRow(
-                                isHeader: false,
-                                kdInvoice: "AJSTORE${data.noTransaksi}",
-                                dueDateInvoice: data.jatuhTempo,
-                                validateProduk: "validateProduk",
-                                description: data.deskripsi,
-                                price:
-                                    currencyFormatterCompact.format(data.total),
-                                status: data.status,
-                                total:
-                                    currencyFormatterCompact.format(data.total),
-                                namaCustomer: data.customer,
-                                id: data.id,
-                              ),
-                            ),
-                          ),
+                                                color: Colors.grey.shade100,
+                                                height: 80,
+                                                width: Get.width,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Tidak ada item untuk invoice ini",
+                                                      style: AppStyleText
+                                                          .stylePoppins(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors
+                                                            .grey.shade400,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 6,
+                                                    ),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        primary: Colors.blue,
+                                                      ),
+                                                      onPressed: () {},
+                                                      child: Text(
+                                                        "Tambah",
+                                                        style: AppStyleText
+                                                            .styleAbeezee(
+                                                          fontSize: 14,
+                                                          color: Colors.white,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : Container(
+                                                margin: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      AppResponsive.isMobile(
+                                                              context)
+                                                          ? 8
+                                                          : 20,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.grey.shade100,
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    const SubInvoiceRow(
+                                                      isHeader: true,
+                                                      namaBarang: "Item",
+                                                      deskripsiBarang:
+                                                          "Deskripsi",
+                                                      hargaBarang: "Harga",
+                                                      qty: "Qty",
+                                                      subTotal: "Sub Total",
+                                                    ),
+                                                    Column(
+                                                      children: List.generate(
+                                                          snapshotSub.data
+                                                                  ?.length ??
+                                                              0, (subIndex) {
+                                                        final sub = snapshotSub
+                                                            .data!
+                                                            .toList()[subIndex];
+                                                        return SubInvoiceRow(
+                                                          isHeader: false,
+                                                          namaBarang: sub.nama,
+                                                          deskripsiBarang:
+                                                              sub.deskripsi,
+                                                          hargaBarang:
+                                                              currencyFormatterCompact
+                                                                  .format(sub
+                                                                      .harga),
+                                                          qty: "${sub.qty}pcs",
+                                                          subTotal:
+                                                              currencyFormatterCompact
+                                                                  .format(sub
+                                                                          .harga *
+                                                                      sub.qty),
+                                                        );
+                                                      }),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                        : const SizedBox(),
+                                    header: InvoiceRow(
+                                        isHeader: false,
+                                        kdInvoice: "AJSTORE${data.noTransaksi}",
+                                        dueDateInvoice: data.jatuhTempo,
+                                        validateProduk: "validateProduk",
+                                        description: data.deskripsi,
+                                        price: currencyFormatterCompact
+                                            .format(data.total),
+                                        status: data.status,
+                                        total: currencyFormatterCompact
+                                            .format(data.total),
+                                        namaCustomer: data.customer,
+                                        id: data.id,
+                                        onTapEdit: () {
+                                          AppDialog.dialogFormInvoice(
+                                            context,
+                                            invoice: data,
+                                            listBarang: snapshotSub.data,
+                                          );
+                                        },
+                                        onTapDelete: () {
+                                          AppDialog.dialogWithQuestion(
+                                            context,
+                                            "Hapus",
+                                            "Anda yakin ingin menghapus data ini?",
+                                            "Batal",
+                                            "Hapus!",
+                                            () {
+                                              invC.deleteInvoice(data.id);
+                                              Navigator.pop(context);
+                                            },
+                                          );
+                                        }),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
                         );
                       },
                     ),

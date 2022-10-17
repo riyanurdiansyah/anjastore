@@ -35,20 +35,20 @@ class SubInvoiceRow extends StatelessWidget {
             width: 5,
           ),
           const SizedBox(
-            width: 5,
+            width: 12,
           ),
-          Checkbox(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            value: false,
-            checkColor: Colors.white,
-            fillColor: MaterialStateProperty.all(Colors.grey.shade400),
-            activeColor: Colors.blue.shade200,
-            onChanged: (val) {},
-          ),
-          const SizedBox(
-            width: 16,
-          ),
+          // Checkbox(
+          //   shape:
+          //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          //   value: false,
+          //   checkColor: Colors.white,
+          //   fillColor: MaterialStateProperty.all(Colors.grey.shade400),
+          //   activeColor: Colors.blue.shade200,
+          //   onChanged: (val) {},
+          // ),
+          // const SizedBox(
+          //   width: 16,
+          // ),
           Expanded(
             child: Container(
               alignment: Alignment.center,

@@ -64,6 +64,72 @@ class InvoiceDetailBody extends StatelessWidget {
                 child: Column(
                   children: [
                     if (AppResponsive.isMobile(context))
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Image.asset(
+                              'assets/images/anjas.png',
+                            ),
+                          ),
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Company Information",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 25,
+                                  ),
+                                  Text(
+                                    "Anjastore",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Text(
+                                    "anjastore@support.com",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Text(
+                                    "021-1234567890",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 12,
+                                  ),
+                                  Text(
+                                    "Bekasi Selatan",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      ),
+                    if (AppResponsive.isMobile(context))
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -164,10 +230,12 @@ class InvoiceDetailBody extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: FlutterLogo(),
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: Image.asset(
+                              'assets/images/anjas.png',
+                            ),
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -901,7 +969,8 @@ class InvoiceDetailBody extends StatelessWidget {
                                 rate:
                                     currencyFormatterCompact.format(item.harga),
                                 amount: currencyFormatterCompact
-                                    .format(item.harga * item.qty),
+                                    .format(item.harga * item.qty)
+                                    .replaceAll("jt", "juta"),
                               );
                             }),
                           );
@@ -1015,49 +1084,64 @@ class InvoiceDetailBody extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            child: Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: Text(
-                                      TerbilangID(number: data.total).result(),
-                                      textAlign: TextAlign.center,
-                                      style: AppStyleText.stylePoppins(
-                                        fontSize: 12,
-                                        height: 1.4,
-                                        color: Colors.grey.shade600,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    "Terbilang",
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    TerbilangID(number: data.total).result(),
+                                    textAlign: TextAlign.right,
+                                    style: AppStyleText.stylePoppins(
+                                      fontSize: 12,
+                                      height: 1.4,
+                                      color: Colors.grey.shade600,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           const SizedBox(
                             height: 16,
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 2, 49, 88),
-                              ),
-                              child: Text(
-                                "Print Invoice",
-                                style: AppStyleText.stylePoppins(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                          SizedBox(
+                            height: 45,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8),
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 6, 134, 240),
+                                ),
+                                child: Text(
+                                  "Download Invoice",
+                                  style: AppStyleText.stylePoppins(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                         ],
                       ),

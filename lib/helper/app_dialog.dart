@@ -1,3 +1,5 @@
+import 'package:anjastore/models/barang_m.dart';
+import 'package:anjastore/models/invoice_m.dart';
 import 'package:anjastore/presentation/controllers/customer_controller.dart';
 import 'package:anjastore/presentation/controllers/invoice_controller.dart';
 import 'package:anjastore/styles/app_color.dart';
@@ -14,8 +16,22 @@ import 'package:intl/intl.dart';
 import 'app_validator.dart';
 
 class AppDialog {
-  static dialogFormInvoice(BuildContext context) {
+  static dialogFormInvoice(
+    BuildContext context, {
+    InvoiceM? invoice,
+    List<BarangM>? listBarang,
+  }) {
     final invC = Get.put(InvoiceController());
+    bool isUpdated = false;
+    if (invoice != null) {
+      invC.namaCustomer.value = invoice.customer;
+      invC.tcDeskripsiInvoice.text = invoice.deskripsi;
+      invC.tcJthTempoInvoice.text = invoice.jatuhTempo;
+      invC.tcNoTransaksiInvoice.text = "AJSTORE-${invoice.noTransaksi}";
+      invC.tcTglInvoice.text = invoice.tanggalInvoice;
+      invC.listBarang.value = listBarang!;
+      isUpdated = true;
+    }
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -420,12 +436,18 @@ class AppDialog {
                               onPressed: () {
                                 if (invC.formAddInvoice.currentState!
                                     .validate()) {
-                                  invC.addInvoice();
-                                  Navigator.pop(context);
+                                  if (isUpdated) {
+                                    invC.updateInvoice(
+                                        invoice!.id, invoice.noTransaksi);
+                                    Navigator.pop(context);
+                                  } else {
+                                    invC.addInvoice();
+                                    Navigator.pop(context);
+                                  }
                                 }
                               },
                               child: Text(
-                                'Tambah',
+                                isUpdated ? 'Ubah' : 'Tambah',
                                 style: AppStyleText.stylePoppins(
                                   fontSize: 14,
                                   color: Colors.white,
@@ -984,6 +1006,84 @@ class AppDialog {
           ),
         );
       },
+    );
+  }
+
+  static dialogWithQuestion(
+    BuildContext context,
+    String title,
+    String content,
+    String txtBatal,
+    String txtOke,
+    VoidCallback onTapOK,
+  ) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: AppStyleText.stylePoppins(
+                fontSize: 16,
+                color: Colors.red.shade600,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            Text(
+              content,
+              textAlign: TextAlign.center,
+              style: AppStyleText.stylePoppins(
+                fontSize: 14,
+                color: Colors.grey.shade400,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      txtBatal,
+                      style: AppStyleText.stylePoppins(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () => onTapOK(),
+                    child: Text(
+                      txtOke,
+                      style: AppStyleText.stylePoppins(
+                        fontSize: 14,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
