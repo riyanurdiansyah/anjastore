@@ -169,68 +169,6 @@ class InvoiceRow extends StatelessWidget {
                         ],
                       )),
           ),
-          // Expanded(
-          //   child: Container(
-          //     alignment: Alignment.center,
-          //     child: isHeader
-          //         ? Text(
-          //             "",
-          //             textAlign: TextAlign.center,
-          //             style: AppStyleText.stylePoppins(
-          //               fontSize: AppResponsive.isMobile(context) ? 10 : 14,
-          //               height: 1.4,
-          //               fontWeight: FontWeight.w500,
-          //               color: isHeader
-          //                   ? Colors.blue.shade500
-          //                   : Colors.grey.shade500,
-          //             ),
-          //           )
-          //         : Row(
-          //             children: [
-          //               SizedBox(
-          //                 width: 80,
-          //                 child: ElevatedButton(
-          //                   style: ElevatedButton.styleFrom(
-          //                     primary: Colors.red,
-          //                   ),
-          //                   onPressed: () {},
-          //                   child: Text(
-          //                     "Hapus",
-          //                     style: AppStyleText.styleAbeezee(
-          //                       fontSize:
-          //                           AppResponsive.isMobile(context) ? 10 : 14,
-          //                       color: Colors.white,
-          //                       fontWeight: FontWeight.bold,
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //               const SizedBox(
-          //                 width: 12,
-          //               ),
-          //               SizedBox(
-          //                 width: 80,
-          //                 child: ElevatedButton(
-          //                   style: ElevatedButton.styleFrom(
-          //                     primary: Colors.blue,
-          //                   ),
-          //                   onPressed: () {
-          //                     html.window.open('invoice/$id', "_blank");
-          //                   },
-          //                   child: Text(
-          //                     "Ubah",
-          //                     style: AppStyleText.styleAbeezee(
-          //                       fontSize: 14,
-          //                       color: Colors.white,
-          //                       fontWeight: FontWeight.bold,
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ),
-          //             ],
-          //           ),
-          //   ),
-          // ),
         ],
       ),
     );

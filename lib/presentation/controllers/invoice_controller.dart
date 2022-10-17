@@ -124,6 +124,14 @@ class InvoiceController extends GetxController {
   }
 
   void updateInvoice(String id, int noTrans) async {
+    var collection = FirebaseFirestore.instance
+        .collection('invoice')
+        .doc(id)
+        .collection('barang');
+    var snapshots = await collection.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
     int total = 0;
     for (int i = 0; i < listBarang.length; i++) {
       var totalBarang = listBarang[i].harga * listBarang[i].qty;
@@ -141,7 +149,7 @@ class InvoiceController extends GetxController {
       "status": "on-hold",
     });
     for (int j = 0; j < listBarang.length; j++) {
-      final cek = await FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection('invoice')
           .doc(id)
           .collection('barang')

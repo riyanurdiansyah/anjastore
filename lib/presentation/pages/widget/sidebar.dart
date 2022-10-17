@@ -17,11 +17,16 @@ class CustomSidebar extends StatelessWidget {
       color: Colors.grey.shade200,
       child: Column(
         children: [
-          const Flexible(
-            flex: 1,
-            child: Center(child: Text("LOGO")),
+          const SizedBox(
+            height: 20,
           ),
-          Flexible(
+          Expanded(
+            flex: 1,
+            child: Image.asset(
+              "assets/images/anjas.png",
+            ),
+          ),
+          Expanded(
             flex: 6,
             child: Container(
               margin: const EdgeInsets.only(top: 20),

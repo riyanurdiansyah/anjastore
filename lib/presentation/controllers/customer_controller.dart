@@ -25,6 +25,15 @@ class CustomerController extends GetxController {
     });
   }
 
+  void updateCustomer(String id) async {
+    await FirebaseFirestore.instance.collection('customer').doc(id).update({
+      "nama": tcNamaCustomer.text,
+      "no_telp": tcTelpCustomer.text,
+      "alamat": tcAlamatCustomer.text,
+      "email": tcEmailCustomer.text,
+    });
+  }
+
   Stream<List<UserM>> streamCustomer() {
     Stream<QuerySnapshot<Map<String, dynamic>>> stream =
         FirebaseFirestore.instance.collection("customer").snapshots();
@@ -35,5 +44,16 @@ class CustomerController extends GetxController {
 
       return listCustomer;
     });
+  }
+
+  void clearText() {
+    tcAlamatCustomer.clear();
+    tcNamaCustomer.clear();
+    tcTelpCustomer.clear();
+    tcEmailCustomer.clear();
+  }
+
+  void deleteUser(String id) async {
+    await FirebaseFirestore.instance.collection('customer').doc(id).delete();
   }
 }

@@ -21,6 +21,16 @@ List<SidebarM> listSidebar = [
     icon: Icons.inventory,
     route: AppRouteName.invoice,
   ),
+  SidebarM(
+    title: "Item",
+    icon: Icons.add_circle_outline_rounded,
+    route: AppRouteName.item,
+  ),
+  SidebarM(
+    title: "Setting",
+    icon: Icons.settings_rounded,
+    route: AppRouteName.setting,
+  ),
 ];
 
 List<SortM> listSortDate = [

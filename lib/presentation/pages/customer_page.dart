@@ -302,6 +302,7 @@ class CustomerPage extends StatelessWidget {
             nama: "Nama",
             telp: "No Telpon",
             alamat: "Alamat",
+            email: "Email",
           ),
           const SizedBox(
             height: 8,
@@ -320,6 +321,22 @@ class CustomerPage extends StatelessWidget {
                         nama: snapshot.data![i].nama,
                         telp: snapshot.data![i].noTelp,
                         alamat: snapshot.data![i].alamat,
+                        email: snapshot.data![i].email,
+                        onTapEdit: () => AppDialog.dialogAddCustomer(context,
+                            user: snapshot.data![i]),
+                        onTapDelete: () {
+                          AppDialog.dialogWithQuestion(
+                            context,
+                            "Hapus",
+                            "Anda yakin ingin menghapus data ini?",
+                            "Batal",
+                            "Hapus!",
+                            () {
+                              custC.deleteUser(snapshot.data![i].id);
+                              Navigator.pop(context);
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),

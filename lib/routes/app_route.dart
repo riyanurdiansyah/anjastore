@@ -28,7 +28,11 @@ class AppRoute {
             builder: (BuildContext context, GoRouterState state) {
               final String path = state.params['path']!;
 
-              if (path != "home" && path != "customer" && path != "invoice") {
+              if (path != "home" &&
+                  path != "customer" &&
+                  path != "invoice" &&
+                  path != "setting" &&
+                  path != "item") {
                 return Container(
                   color: Colors.red,
                 );

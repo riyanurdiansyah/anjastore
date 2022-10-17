@@ -1,5 +1,6 @@
 import 'package:anjastore/models/barang_m.dart';
 import 'package:anjastore/models/invoice_m.dart';
+import 'package:anjastore/models/user_m.dart';
 import 'package:anjastore/presentation/controllers/customer_controller.dart';
 import 'package:anjastore/presentation/controllers/invoice_controller.dart';
 import 'package:anjastore/styles/app_color.dart';
@@ -743,8 +744,17 @@ class AppDialog {
     );
   }
 
-  static dialogAddCustomer(BuildContext context) {
+  static dialogAddCustomer(
+    BuildContext context, {
+    UserM? user,
+  }) {
     final custC = Get.put(CustomerController());
+    if (user != null) {
+      custC.tcNamaCustomer.text = user.nama;
+      custC.tcEmailCustomer.text = user.email;
+      custC.tcTelpCustomer.text = user.noTelp;
+      custC.tcAlamatCustomer.text = user.alamat;
+    }
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -960,7 +970,10 @@ class AppDialog {
                             style: ElevatedButton.styleFrom(
                               primary: Colors.grey.shade300,
                             ),
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              Navigator.pop(context);
+                              custC.clearText();
+                            },
                             child: Text(
                               'Batal',
                               style: AppStyleText.stylePoppins(
@@ -984,12 +997,16 @@ class AppDialog {
                             onPressed: () {
                               if (custC.formAddCustomer.currentState!
                                   .validate()) {
-                                custC.addCustomer();
+                                if (user == null) {
+                                  custC.addCustomer();
+                                } else {
+                                  custC.updateCustomer(user.id);
+                                }
                                 Navigator.pop(context);
                               }
                             },
                             child: Text(
-                              'Tambah',
+                              user == null ? 'Tambah' : 'Ubah',
                               style: AppStyleText.stylePoppins(
                                 fontSize: 14,
                                 color: Colors.white,

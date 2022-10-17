@@ -1,6 +1,8 @@
 import 'package:anjastore/constanta.dart';
 import 'package:anjastore/presentation/pages/customer_page.dart';
 import 'package:anjastore/presentation/pages/invoice_page.dart';
+import 'package:anjastore/presentation/pages/item_page.dart';
+import 'package:anjastore/presentation/pages/setting_page.dart';
 import 'package:anjastore/presentation/pages/widget/admin_header.dart';
 import 'package:anjastore/presentation/pages/widget/sidebar.dart';
 import 'package:anjastore/styles/app_responsive.dart';
@@ -85,6 +87,8 @@ class MainWidget extends StatelessWidget {
                 ),
                 CustomerPage(),
                 InvoicePage(),
+                const ItemPage(),
+                const SettingPage(),
               ],
             ),
           ),

@@ -10,7 +10,6 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'widget/custom_popup_menu.dart';
 import 'widget/row_sub_invoice.dart';
 
 class InvoicePage extends StatelessWidget {
@@ -108,218 +107,218 @@ class InvoicePage extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-            width: double.infinity,
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: SizedBox(
-                    height: 40,
-                    child: TextField(
-                      style: AppStyleText.stylePoppins(
-                        fontSize: 14,
-                        color: Colors.black,
-                      ),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color.fromRGBO(241, 242, 244, 1),
-                        border: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.grey),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 0.2, color: Colors.white),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        hintText: "Cari invoice disini....",
-                        hintStyle: AppStyleText.styleLato(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          height: 1.5,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.highlight_remove_rounded,
-                            size: 18,
-                          ),
-                          onPressed: () {},
-                          color: Colors.grey,
-                        ),
-                        prefixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.search_rounded,
-                            size: 18,
-                          ),
-                          onPressed: () {},
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                if (!AppResponsive.isMobile(context))
-                  const Expanded(
-                    flex: 4,
-                    child: SizedBox(),
-                  ),
-                if (!AppResponsive.isMobile(context))
-                  SizedBox(
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 55,
-                          child: CustomPopUpMenu(
-                            listMenu: List.generate(
-                              listSortName.length,
-                              (index) => PopupMenuItem(
-                                onTap: () {},
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.abc_rounded,
-                                      size: 16,
-                                    ),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
-                                    Text(
-                                      listSortName[index].title!,
-                                      style: AppStyleText.stylePoppins(
-                                        fontSize: 14,
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            icon: Container(
-                              height: 55,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.abc_rounded,
-                                    size: 18,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      "Nama",
-                                      style: AppStyleText.stylePoppins(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Icon(
-                                    Icons.expand_more_rounded,
-                                    size: 16,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            offset: const Offset(-10, 50),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 55,
-                          child: CustomPopUpMenu(
-                            listMenu: List.generate(
-                              listSortDate.length,
-                              (index) => PopupMenuItem(
-                                onTap: () {},
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.date_range_rounded,
-                                      size: 16,
-                                    ),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
-                                    Text(
-                                      listSortDate[index].title!,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            icon: Container(
-                              height: 55,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 12),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.grey.shade300,
-                                ),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.date_range_rounded,
-                                    size: 16,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      "Tanggal",
-                                      style: AppStyleText.stylePoppins(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  Icon(
-                                    Icons.expand_more_rounded,
-                                    size: 16,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            offset: const Offset(-10, 50),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
+          // Container(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          //   width: double.infinity,
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         flex: 2,
+          //         child: SizedBox(
+          //           height: 40,
+          //           child: TextField(
+          //             style: AppStyleText.stylePoppins(
+          //               fontSize: 14,
+          //               color: Colors.black,
+          //             ),
+          //             decoration: InputDecoration(
+          //               filled: true,
+          //               fillColor: const Color.fromRGBO(241, 242, 244, 1),
+          //               border: OutlineInputBorder(
+          //                 borderSide:
+          //                     const BorderSide(width: 0.2, color: Colors.grey),
+          //                 borderRadius: BorderRadius.circular(6),
+          //               ),
+          //               focusedBorder: OutlineInputBorder(
+          //                 borderSide:
+          //                     const BorderSide(width: 0.2, color: Colors.grey),
+          //                 borderRadius: BorderRadius.circular(6),
+          //               ),
+          //               enabledBorder: OutlineInputBorder(
+          //                 borderSide:
+          //                     const BorderSide(width: 0.2, color: Colors.white),
+          //                 borderRadius: BorderRadius.circular(6),
+          //               ),
+          //               hintText: "Cari invoice disini....",
+          //               hintStyle: AppStyleText.styleLato(
+          //                 color: Colors.grey,
+          //                 fontSize: 14,
+          //                 height: 1.5,
+          //               ),
+          //               suffixIcon: IconButton(
+          //                 icon: const Icon(
+          //                   Icons.highlight_remove_rounded,
+          //                   size: 18,
+          //                 ),
+          //                 onPressed: () {},
+          //                 color: Colors.grey,
+          //               ),
+          //               prefixIcon: IconButton(
+          //                 icon: const Icon(
+          //                   Icons.search_rounded,
+          //                   size: 18,
+          //                 ),
+          //                 onPressed: () {},
+          //                 color: Colors.grey,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //       ),
+          //       if (!AppResponsive.isMobile(context))
+          //         const Expanded(
+          //           flex: 4,
+          //           child: SizedBox(),
+          //         ),
+          //       if (!AppResponsive.isMobile(context))
+          //         SizedBox(
+          //           child: Row(
+          //             children: [
+          //               SizedBox(
+          //                 height: 55,
+          //                 child: CustomPopUpMenu(
+          //                   listMenu: List.generate(
+          //                     listSortName.length,
+          //                     (index) => PopupMenuItem(
+          //                       onTap: () {},
+          //                       child: Row(
+          //                         children: [
+          //                           const Icon(
+          //                             Icons.abc_rounded,
+          //                             size: 16,
+          //                           ),
+          //                           const SizedBox(
+          //                             width: 16,
+          //                           ),
+          //                           Text(
+          //                             listSortName[index].title!,
+          //                             style: AppStyleText.stylePoppins(
+          //                               fontSize: 14,
+          //                               color: Colors.black87,
+          //                               fontWeight: FontWeight.w500,
+          //                             ),
+          //                           ),
+          //                         ],
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   icon: Container(
+          //                     height: 55,
+          //                     padding:
+          //                         const EdgeInsets.symmetric(horizontal: 12),
+          //                     decoration: BoxDecoration(
+          //                       borderRadius: BorderRadius.circular(8),
+          //                       border: Border.all(
+          //                         width: 2,
+          //                         color: Colors.grey.shade300,
+          //                       ),
+          //                     ),
+          //                     child: Row(
+          //                       children: [
+          //                         Icon(
+          //                           Icons.abc_rounded,
+          //                           size: 18,
+          //                           color: Colors.grey.shade400,
+          //                         ),
+          //                         const SizedBox(
+          //                           width: 12,
+          //                         ),
+          //                         Padding(
+          //                           padding: const EdgeInsets.only(top: 4.0),
+          //                           child: Text(
+          //                             "Nama",
+          //                             style: AppStyleText.stylePoppins(
+          //                               fontSize: 12,
+          //                               fontWeight: FontWeight.w600,
+          //                               color: Colors.grey.shade400,
+          //                             ),
+          //                           ),
+          //                         ),
+          //                         const Spacer(),
+          //                         Icon(
+          //                           Icons.expand_more_rounded,
+          //                           size: 16,
+          //                           color: Colors.grey.shade400,
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   offset: const Offset(-10, 50),
+          //                 ),
+          //               ),
+          //               SizedBox(
+          //                 height: 55,
+          //                 child: CustomPopUpMenu(
+          //                   listMenu: List.generate(
+          //                     listSortDate.length,
+          //                     (index) => PopupMenuItem(
+          //                       onTap: () {},
+          //                       child: Row(
+          //                         children: [
+          //                           const Icon(
+          //                             Icons.date_range_rounded,
+          //                             size: 16,
+          //                           ),
+          //                           const SizedBox(
+          //                             width: 16,
+          //                           ),
+          //                           Text(
+          //                             listSortDate[index].title!,
+          //                           ),
+          //                         ],
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   icon: Container(
+          //                     height: 55,
+          //                     padding:
+          //                         const EdgeInsets.symmetric(horizontal: 12),
+          //                     decoration: BoxDecoration(
+          //                       borderRadius: BorderRadius.circular(8),
+          //                       border: Border.all(
+          //                         width: 2,
+          //                         color: Colors.grey.shade300,
+          //                       ),
+          //                     ),
+          //                     child: Row(
+          //                       children: [
+          //                         Icon(
+          //                           Icons.date_range_rounded,
+          //                           size: 16,
+          //                           color: Colors.grey.shade400,
+          //                         ),
+          //                         const SizedBox(
+          //                           width: 12,
+          //                         ),
+          //                         Padding(
+          //                           padding: const EdgeInsets.only(top: 4.0),
+          //                           child: Text(
+          //                             "Tanggal",
+          //                             style: AppStyleText.stylePoppins(
+          //                               fontSize: 12,
+          //                               fontWeight: FontWeight.w600,
+          //                               color: Colors.grey.shade400,
+          //                             ),
+          //                           ),
+          //                         ),
+          //                         const Spacer(),
+          //                         Icon(
+          //                           Icons.expand_more_rounded,
+          //                           size: 16,
+          //                           color: Colors.grey.shade400,
+          //                         ),
+          //                       ],
+          //                     ),
+          //                   ),
+          //                   offset: const Offset(-10, 50),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ),
+          //     ],
+          //   ),
+          // ),
           const InvoiceRow(
             isHeader: true,
             kdInvoice: "Invoice",
@@ -333,7 +332,7 @@ class InvoicePage extends StatelessWidget {
             id: '',
           ),
           const SizedBox(
-            height: 8,
+            height: 5,
           ),
           StreamBuilder<List<InvoiceM>>(
             stream: invC.streamInvoice(),
